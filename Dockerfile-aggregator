@@ -1,0 +1,5 @@
+FROM alpine:latest
+
+RUN mkdir /data/
+
+RUN apk --update add bash nmap-ncat

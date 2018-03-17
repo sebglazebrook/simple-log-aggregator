@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  appserver:
+    build:
+      context: .
+    image: alpine:latest
+    command: "sh -c '/app/start-server | /app/logging-client'"
+    volumes:
+      - .:/app/
+    depends_on:
+      - logaggregator
+  logaggregator:
+    build:
+      context: .
+      dockerfile: Dockerfile-aggregator
+    volumes:
+      - .:/app/
+      - ./data:/data/
+    command: "sh -c '/app/aggregate-logs'"
+    ports:
+      - 6969:6969
