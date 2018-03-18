@@ -20,3 +20,13 @@ services:
     command: "sh -c '/app/aggregate-logs'"
     ports:
       - 6969:6969
+  logreader:
+    build:
+      context: .
+      dockerfile: Dockerfile-logreader
+    volumes:
+      - .:/app/
+      - ./data:/data/
+    ports:
+      - "2222:22"
+    command: "sh -c '/usr/sbin/sshd -D'"

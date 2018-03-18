@@ -1,0 +1,18 @@
+FROM alpine:latest
+
+RUN mkdir /data/
+
+RUN apk --update add bash openssh-server
+
+RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ""
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ""
+RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""
+RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
+
+RUN mkdir /root/.ssh/ && chmod 700 /root/.ssh
+
+COPY authorized_keys /root/.ssh/
+
+RUN chmod 700 /root/.ssh/authorized_keys
+
+COPY sshd_config /etc/sshd/
