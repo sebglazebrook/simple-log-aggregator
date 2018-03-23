@@ -2,5 +2,5 @@
 while read line
 do
   echo "$line"
-  echo "$line" | ncat 172.31.0.2 6969 # TODO use domain name instead of IP
+  echo "$line" | ncat logaggregator 6969
 done < "${1:-/dev/stdin}" # stderr too??
